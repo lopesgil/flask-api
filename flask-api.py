@@ -1,0 +1,1 @@
+from quotr import app
