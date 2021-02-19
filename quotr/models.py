@@ -15,7 +15,10 @@ class User(db.Model):
     email = db.Column(db.String(120),index=True, unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
-    quotes = db.relationship('FavoriteQuote', backref='user', lazy='dynamic')
+    quotes = db.relationship('FavoriteQuote',
+                             backref='user',
+                             lazy='dynamic',
+                             cascade='all, delete')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
