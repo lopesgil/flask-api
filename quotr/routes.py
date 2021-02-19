@@ -1,5 +1,5 @@
 from quotr import app, manager
-from quotr.models import Country, User
+from quotr.models import Country, User, FavoriteQuote
 from werkzeug.security import generate_password_hash
 
 @app.route('/')
@@ -16,3 +16,4 @@ manager.create_api(User,
                    preprocessors={
                        'POST': [pre_create_user]
                    })
+manager.create_api(FavoriteQuote, methods=['GET', 'POST', 'PUT', 'DELETE'])
