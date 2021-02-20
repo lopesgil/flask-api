@@ -1,5 +1,6 @@
 from quotr import app, manager, db
 from quotr.models import Country, User, FavoriteQuote
+from flask_restless import ProcessingException
 from werkzeug.security import generate_password_hash
 from dotenv import load_dotenv
 import os
@@ -22,6 +23,12 @@ def pre_create_user(data=None, **kw):
 def post_create_user(result=None, **kw):
     user_id = result['id']
     r = requests.get('https://favqs.com/api/quotes/', headers=headers)
+    if r.status_code != 200:
+        user = User.query.filter_by(id=user_id).first()
+        db.session.delete(user)
+        db.session.commit()
+        raise ProcessingException(description='Not Authorized',
+                                  code='401')
     q = r.json()['quotes'][0]
 
     quote = FavoriteQuote(user_id=user_id, body=q['body'], author=q['author'])
