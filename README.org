@@ -21,7 +21,7 @@ realizar tarefas específicas.
 ** Modelo da aplicação
 Três entidades: *User*, *Country* e *FavoriteQuote*.
 - Country - User :: Relação 1 para N
-- User - FavoriteQuote :: Relação 1 para
+- User - FavoriteQuote :: Relação 1 para N
 
 * Servindo o projeto
 Para instalar e executar o projeto, são necessários tanto o *Python* como o
