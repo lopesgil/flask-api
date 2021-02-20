@@ -1,0 +1,90 @@
+#+TITLE: API em Flask
+
+* Informações gerais
+Este trabalho constitui o trabalho final referente ao Processo Seletivo
+Interno da EJCM para Tech Lead. Com o objetivo de conhecer novas tecnologias,
+como desenvolvedor Front-end me coube a implementação de uma API Restful. Eu
+decidi usar a framework *Flask*, em Python, para a realização do trabalho.
+Para simplificar o processo de desenvolvimento, foi usado um banco de dados
+SQLite.
+
+Como Flask é uma microframework, utilizei extensões e pacotes externos para
+realizar tarefas específicas.
+
+** Extensões e pacotes externos
+- Flask-SQLAlchemy :: ORM
+- Flask-Migrate :: Migrações do banco de dados
+- Flask-Restless :: Métodos da API
+- python-dotenv :: Reconhecimento de arquivos .env
+- requests :: Requisições HTTP para API externa
+
+** Modelo da aplicação
+Três entidades: *User*, *Country* e *FavoriteQuote*.
+- Country - User :: Relação 1 para N
+- User - FavoriteQuote :: Relação 1 para
+
+* Servindo o projeto
+Para instalar e executar o projeto, são necessários tanto o *Python* como o
+instalador de pacotes *pip*. Instruções de instalação para ambos podem ser
+encontradas no próprio [[https://www.python.org/][site oficial do Python]]. Além disso ambos podem ser
+encontrados em gerenciadores de pacotes de sistemas Linux.
+
+Caso esteja no Windows, é recomendável que seja utilizado o *Git Bash* para
+a execução dos comandos.
+
+** Instalação
+Clone e entre neste repositório:
+
+~git clone https://github.com/lopesgil/flask-api.git && cd flask-api~
+
+É recomendável que um ambiente virtual de python seja criado:
+
+~python -m venv venv~
+
+Após isso é preciso ativá-lo. No Windows:
+
+~venv\Scripts\activate~
+
+No Linux:
+
+~source venv/bin/activate~
+
+Para instalar o projeto e suas dependências em modo de desenvolvimento basta
+executar:
+
+~pip install -e .~
+
+E finalmente, para criar o banco de dados SQLite e migrar as tabelas:
+
+~flask db upgrade~
+
+** Execução
+Para executar o servidor de desenvolvimento:
+
+~flask run~
+
+Todas as rotas da aplicação têm como base o endereço
+=http://127.0.0.1:5000/api/{resource}= onde ={resource}= deve ser substituído
+por ~user~, ~country~ ou ~favorite_quote~ conforme apropriado. Por exemplo,
+para ter acesso à lista de usuários, é preciso fazer uma requisição à rota
+=http://127.0.0.1:5000/api/user= com o método HTTP GET.
+
+Todas as entidades possuem CRUD completas. Para as rotas que dependem de id,
+basta-se adicioná-lo ao caminho do recurso. Por exemplo, para deletar o
+usuário com id 1: =http://127.0.0.1:5000/api/user/1=.
+
+Além disso, para conveniência nos testes, o arquivo json =flask-api-routes=
+pode ser importando no *Insomnia* já com todas as rotas disponíveis para
+teste.
+
+*Importante:* Quando um User é criado, é criado também um FavoriteQuote
+associado a ele. Esta entidade é criada através do uso de uma api externa
+com autenticação, de modo que é necessária a utilização de uma chave.
+
+Para isto basta acessar o site [[https://favqs.com/api]], criar uma conta,
+entrar em [[https://favqs.com/api_keys]] e gerar uma chave de aplicação. Após
+isso é preciso criar um arquivo =.env= na raiz do projeto, com o conteúdo:
+
+=CLIENT_KEY={Key}=
+
+onde ={Key}= se refere à chave criada.
