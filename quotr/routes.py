@@ -6,7 +6,7 @@ import os
 import requests
 
 load_dotenv()
-CLIENT_KEY = os.getenv('CLIENT_KEY')
+CLIENT_KEY = os.getenv('CLIENT_KEY') or ''
 headers = {
     'Authorization': 'Token token=' + CLIENT_KEY
 }
